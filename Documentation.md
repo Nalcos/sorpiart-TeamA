@@ -257,19 +257,25 @@ F ----> H(Clear Button)
 ```
 
 ## Adding new features to the GUI
- By adding new features into our peoject, it makes the GUI more engaging and makes it more enjoyable for the user
+ By adding new features into our peoject, it makes the GUI more engaging and makes it more enjoyable for the user.
 
 ### Preset Button
+With the addition of the preset button, it allows the user to see an exmaple of how to GUI should be used.
 
 ### Physical Volume Buttons
+By adding 3 physical buttons, it allows the user to increase, decrease or mute the audio coming out from the Raspberry Pi. 
 
 ### Canvas Mode
+Instead of clicking boxes, we have given the option to actually draw with the help of the touch display. 
+
+### Touch Display
 
 ### Activites
+We have made different activities to engage the user to play around and guess the different sounds played.
 
 #### Mario!
 
-#### Trace the Drawing
+#### Trace the Drawing  
 
 
 As of 6th June 2022, 6:00pm
