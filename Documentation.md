@@ -1,4 +1,4 @@
-﻿# POC Documentation
+﻿# Documentation
 ### This POC Documentation contains the codes and parts/hardware that we used in our project
 
 In this project we were tasked to make a GUI which produces sound with a click of a button using Raspberry PI 4 Model B.
@@ -30,6 +30,14 @@ The main purpose of the GUI is to allow the user to make and image and play it b
 	- Fullscreen Window
 	- Packing frame in grid
 	- Run window in constant loop
+- Adding new features to the GUI
+    - Preset Button
+    - Volume Button
+    - Canvas
+    - Touch Screen Display
+    - Activities
+        - Mario!
+        - Trace the Drawing
 
  
 
