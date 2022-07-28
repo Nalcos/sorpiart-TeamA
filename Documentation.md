@@ -257,11 +257,18 @@ F ----> H(Clear Button)
 ```
 
 ## Adding new features to the GUI
+ By adding new features into our peoject, it makes the GUI more engaging and makes it more enjoyable for the user
+
 ### Preset Button
+
 ### Physical Volume Buttons
+
 ### Canvas Mode
+
 ### Activites
+
 #### Mario!
+
 #### Trace the Drawing
 
 
