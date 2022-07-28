@@ -256,8 +256,13 @@ F ----> G(Play Button)
 F ----> H(Clear Button)
 ```
 
-## Final Product
+## Adding new features to the GUI
+### Preset Button
+### Physical Volume Buttons
+### Canvas Mode
+### Activites
+#### Mario!
+#### Trace the Drawing
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/blp9PV2"  ><a href="//imgur.com/a/blp9PV2">GUI Window - Team A</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 
 As of 6th June 2022, 6:00pm
