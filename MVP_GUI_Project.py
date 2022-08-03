@@ -16,8 +16,6 @@ PixelFrame = Frame(tabControl)
 CanvasFrame = Frame(tabControl)
 ButtonFrame = Frame(main)
 
-lastx, lasty = -5,-5
-
 #Pixel Button Function
 def press(get):
     x=get[0]; y=get[1]
