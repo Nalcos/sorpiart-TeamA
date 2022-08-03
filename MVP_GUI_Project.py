@@ -7,7 +7,7 @@ from subprocess import Popen
 from PIL import Image
 
 main = Tk()
-main.title("My Fantastic GUI")
+main.title("Gaze the Beats")
 
 tabControl = Notebook(main)
 tabControl.pack(expand = True, fill='both',side=LEFT)
