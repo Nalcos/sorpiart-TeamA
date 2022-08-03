@@ -50,7 +50,6 @@ def draw(get):
 
 #Play Function
 def play():
-    global button
     #Soundtype
     soundtype = soundtypevar.get()
     
@@ -234,7 +233,7 @@ button_mute = gpiozero.Button(26)
 button_mute.when_pressed=mute
 
 
-#main.attributes("-fullscreen", True)
+main.attributes("-fullscreen", True)
 PixelFrame.pack(fill='both',expand=True)
 CanvasFrame.pack(fill='both',expand=True)
 ButtonFrame.pack(side=RIGHT)
@@ -242,8 +241,6 @@ ButtonFrame.pack(side=RIGHT)
 #Mode Tabs
 tabControl.add(PixelFrame, text='Button Mode')
 tabControl.add(CanvasFrame, text='Canvas Mode')
-
-#print(tabControl.tab(tabControl.select(), "text"))
 
 main.mainloop()
 pause()
