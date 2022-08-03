@@ -1,5 +1,5 @@
 from tkinter import *
-#from pix2music import *
+from pix2music import *
 from tkinter.ttk import Notebook
 import gpiozero
 from signal import pause
@@ -34,15 +34,13 @@ def press(get):
 def savePosn(event):
     global lastx, lasty
     lastx, lasty = event.x, event.y
-    toggleX = int(event.x/45)
+    toggleX = int(event.x/32.5)
     toggleY = int(event.y/47.5)
     print(toggleX,toggleY)
     get = [toggleY,toggleX]
     draw(get)
     
 def addLine(event):
-    #canvas.create_line((lastx, lasty, lastx+5, lasty+5))
-    #canvas.create_oval(lastx, lasty, lastx+5, lasty+5, fill="black")
     canvas.create_oval(lastx, lasty, lastx+5, lasty+5, fill="black")
     savePosn(event)
     
@@ -53,7 +51,8 @@ def draw(get):
         print(toggleDraw)
 
 #Play Function
-def play():    
+def play():
+    global button
     #Soundtype
     soundtype = soundtypevar.get()
     
@@ -65,27 +64,23 @@ def play():
     
     #Mode checking
     #Integrate Music
-#     if tabControl.tab(tabControl.select(), "text") == "Button Mode":
-#         for i in range(len(toggle)):
-#             if toggle[i][i] != 1:
-#                 pass
-#             else:
-#                 pix2music(soundtype,bpmvalue,note,toggle)
-#     if tabControl.tab(tabControl.select(), "text") == "Canvas Mode":
-#         for i in range(len(toggleDraw)):
-#             if toggleDraw[i][i] != 1:
-#                 pass
-#             else:
-#                 pix2music(soundtype,bpmvalue,note,toggleDraw)
-        
-#     if tabControl.tab(tabControl.select(), "text") == "Button Mode":
-#         pix2music(soundtype,bpmvalue,note,toggle)
-#         print('works')
-#     elif tabControl.tab(tabControl.select(), "text") == "Canvas Mode":
-#         pix2music(soundtype,bpmvalue,note,toggleDraw)
-#         print('workstoo')
-        
-    
+    if tabControl.tab(tabControl.select(), "text") == "Button Mode":
+        for t in range(len(toggle)):
+            if 1 not in toggle[t]:
+                pass
+            else:
+                pix2music(soundtype,bpmvalue,note,toggle)                
+                break
+
+            
+    elif tabControl.tab(tabControl.select(), "text") == "Canvas Mode":
+        for t in range(len(toggleDraw)):
+            if 1 not in toggleDraw[t]:
+                pass
+            else:
+                pix2music(soundtype,bpmvalue,note,toggleDraw)
+                break
+            
 #Clear Function
 def clear():
     global toggle,button
@@ -111,40 +106,45 @@ def decrease_volume():
 def mute():
     Popen(['amixer','set', 'PCM', 'toggle'])
     pix2music('sine',100,'D4',[[1]])
+    
+#Button Preset Functions
+def activity_1():
+    mario_row = [0,0,1,1,2,2,3,3,4,4,5,5,8,8]
+    mario_column = [2,7,2,7,2,7,0,5,2,7,4,9,0,2]
+    for i in range(len(mario_row)):
+        button[mario_row[i]][mario_column[i]].config(bg="#AFE1AF")
+    
+def activity_2():
+    canvas.create_image(50, 50, image=tree,anchor = "nw")
 
 
 def preset():
-    #global toggle
     if tabControl.tab(tabControl.select(), "text") == "Button Mode":
-        mario_row = [0,0,1,1,2,2,3,3,4,4,5,5,8,8]
-        mario_column = [2,7,2,7,2,7,0,5,2,7,4,9,0,2]
-        for i in range(len(mario_row)):
-            button[mario_row[i]][mario_column[i]].config(bg="#AFE1AF")
+        activity_1()
 
     elif tabControl.tab(tabControl.select(), "text") == "Canvas Mode":
-        canvas.create_image(0, 0, image=tree,anchor = "nw")
+        activity_2()
         
 R = 9
 C = 15
-CanvasC = 15
+CanvasC = 21
 
 #Toggle List (button)
 toggle = [i for i in range(R)]
+toggleDraw = [i for i in range(R)]
+
 for i in range(R):
     toggle[i] = [j for j in range(C)]
     for j in range(C):
         toggle[i][j]= 0
-print("Toggle is {}". format(toggle))
-
-toggleDraw = [i for i in range(R)]
-for i in range(R):
     toggleDraw[i] = [j for j in range(CanvasC)]
     for j in range(CanvasC):
         toggleDraw[i][j]= 0
-print("Toggle Draw is {}". format(toggleDraw))
+print("Toggle is {}". format(toggle))
+print("Toggle Draw is {}". format(toggleDraw))    
+
 
 #Pixel List and Button Creation
-
 button = [i for i in range(R)]
 for x in range(R):
     button[x] = [j for j in range(C)]
@@ -154,13 +154,10 @@ for x in range(R):
         button[x][y].grid(row=x, column=y)
         
 #Drawing Canvas
-canvas = Canvas (CanvasFrame,height=R*47.5,width=CanvasC*45,bd=1,relief='ridge')
+canvas = Canvas (CanvasFrame,height=R*47.5,width=CanvasC*32.5,bd=1,relief='ridge')
 canvas.pack()
 canvas.bind("<Button-1>", savePosn)
 canvas.bind("<B1-Motion>", addLine)
-
-#Preset Images
-tree = PhotoImage(file='/home/pi/Project/cartoon_tree.png')
 
 
 #BPM Slider
@@ -220,6 +217,16 @@ Clear.pack()
 Preset = Button(ButtonFrame,text="Preset",command=preset, width=5, height=2)
 Preset.pack()
 
+#Preset Images
+tree = PhotoImage(file='cartoon_tree.png')
+tree = tree.subsample(1, 2)
+
+#Physical Preset Button
+button_A1 = gpiozero.Button(6)
+button_A1.when_pressed=activity_1
+button_A2 = gpiozero.Button(5)
+button_A2.when_pressed=activity_2
+
 #Physical Volume Button
 button_up = gpiozero.Button(21)
 button_up.when_pressed=increase_volume
@@ -227,6 +234,7 @@ button_down = gpiozero.Button(20)
 button_down.when_pressed=decrease_volume
 button_mute = gpiozero.Button(26)
 button_mute.when_pressed=mute
+
 
 #main.attributes("-fullscreen", True)
 PixelFrame.pack(fill='both',expand=True)
