@@ -314,11 +314,11 @@ graph
 A[Rasberry Pi] --3.5mm TRS out to RCA in--> B((Speaker L))
 A --3.5mm TRS out to RCA in--> C((Speaker R))
 A --SDI Out--> D[Touch Display]
-E(Physical Button 1 (Volume Up)) --GPIO--> A
-F(Physical Button 2 (Volume Down)) --GPIO--> A
-G(Physical Button 3 (Volume Mute)) --GPIO--> A
-H(Physical Button 4 (Activty 1 Preset)) --GPIO--> A
-I(Physical Button 5 (Activty 2 Preset)) --GPIO--> A
+E(Volume Up) --GPIO--> A
+F(Volume Down) --GPIO--> A
+G(Volume Mute) --GPIO--> A
+H(Activty 1 Preset) --GPIO--> A
+I(Activty 2 Preset) --GPIO--> A
 
 
 ```
