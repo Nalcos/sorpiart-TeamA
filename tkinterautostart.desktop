@@ -1,2 +1,2 @@
 [Desktop Entry]
-Exec= python3 /home/pi/<folder-name>/<main-python-file.py>
+Exec= python3 /home/pi/Project/GUI_Project.py
