@@ -411,7 +411,7 @@ Play and learn the enhance capabilities of drawing on a canvas, with the use of 
 def activity_2():
     canvas.create_image(50, 50, image=tree,anchor = "nw")
 
-tree = PhotoImage(file='cartoon_tree.png')
+tree = PhotoImage(file='/home/pi/Project/cartoon_tree.png')
 tree = tree.subsample(1, 2)
 
 #### Variety of Beats

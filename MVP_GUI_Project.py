@@ -215,7 +215,7 @@ Preset = Button(ButtonFrame,text="Preset",command=preset, width=5, height=2)
 Preset.pack()
 
 #Preset Images
-tree = PhotoImage(file='cartoon_tree.png')
+tree = PhotoImage(file='/home/pi/Project/cartoon_tree.png')
 tree = tree.subsample(1, 2)
 
 #Physical Preset Button
