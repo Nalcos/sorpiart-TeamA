@@ -1,23 +1,25 @@
-﻿# Documentation
-### This POC Documentation contains the codes and parts/hardware that we used in our project
+﻿# Gaze the Beats
 
-In this project we were tasked to make a GUI which produces sound with a click of a button using Raspberry PI 4 Model B.
+## Project Concept
 
-We have added different items to give the user a more advanced look at the GUI, such as a slider that adjust the BPM of the sound being produced.
+We have developed this project system to let users be able to draw on the graphical user interace (GUI) system, and produce the sounds of the drawing, embedded within the Raspberry Pi 4B.
 
-The main purpose of the GUI is to allow the user to make and image and play it back to them in the form of sound.
+We have added different widget items to give the user a more advanced look at the GUI, such as a slider that adjust the BPM of the sound being produced.
 
 ## Table of Content
-
+ - Configuration (autostart)
+ - Installation of libraries
+     - Install sox library (pix2music)
+     - Install PIL library (Image)
  - Setting up the GUI
-	 - Import Projects
+	 - Import of libraries
 	 - Starting the Window
 	 - Setting Variables
 	 - Toggle
 	 - Button
  - Functions
 	 - Function - Press
-	 -	Function - Play
+	 - Function - Play
 	 - Function - Clear
 - Song Library
 	- Selecting note origin
@@ -30,20 +32,52 @@ The main purpose of the GUI is to allow the user to make and image and play it b
 	- Fullscreen Window
 	- Packing frame in grid
 	- Run window in constant loop
-- Adding new features to the GUI
-    - Preset Button
-    - Volume Button
+- Implementing defining features
+    - Preset Buttons
+    - Volume Buttons
     - Canvas
     - Touch Screen Display
+        - Hardware Installation
+        - Software Installation
     - Activities
-        - Mario!
-        - Trace the Drawing
+        - Activity 1: Mario!
+        - Activity 2: Trace the Drawing
 
+## Configuration (autostart)
+In order to run your tkinter gui script (**GUI_Project.py**) everytime the **Raspberry Pi** boots up, we can utilise on **autostart**. 
+
+1. open terminal
+2. change directory to **.config**
+2.1 `cd .config/`
+3. Create an **autostart** folder
+3.1 `mkdir autostart`
+4. copy **tkinterautostart.desktop** into the folder
+4.1 `cp ~/sorpiart/tkinterautostart.desktop ~/.config/autostart/`
+5. edit **tkinterautostart.desktop** 
+5.1 `nano ~/.config/autostart/tkinterautostart.desktop`
  
+## Installation of libraries
+These libraries are the necessary inclusions in order to function different features of the system.
+
+Before installing the libraries, we need to update packages that has already been installed beforehand.
+
+All libraries can be installed throught the Raspbian Terminal.
+
+`sudo apt-get update`
+
+### Install sox library (pix2music)
+In order for **pix2music.py** to work, the **Raspberry Pi** will require the **Sound Exchange (sox)** library to be installed.
+
+`sudo apt install sox`
+
+### Install PIL library (Image)
+In order for images to be placed, the **Raspberry Pi** will require the **Pillow (PIL)** library to be installed.
+
+`python3 -m pip install pillow`
 
 ## Setting up the GUI
 
-### Import of Files
+### Import of libraries
 The files, tkinter and pix2music are needed for to function the Python GUI. Tkinter functions the basis of a window, and pix2music translates the grid and parameters into an acoustic sound.
 
 The Notebook library is implemented for Mode Switching between Button and Canvas Mode. the gpiozero library is used to implement GPIO pin connection for physical button use. Pause library is used to coincide with GPIO pins. Popen  is used to push codes onto the Terminal for Raspberry Pi use. PIL Image is necessary for image application.
@@ -127,8 +161,6 @@ for x in range(R):
 				        command = lambda get = [x,y]: press(get))
         button[x][y].grid(row=x, column=y)
 ```
- 
-
 
 ## Functions 
 
@@ -282,9 +314,11 @@ graph
 A[Rasberry Pi] --3.5mm TRS out to RCA in--> B((Speaker L))
 A --3.5mm TRS out to RCA in--> C((Speaker R))
 A --SDI Out--> D[Touch Display]
-E(Physical Button 1) --GPIO--> A
-F(Physical Button 2) --GPIO--> A
-G(Physical Button 3) --GPIO--> A
+E(Physical Button 1 (Volume Up)) --GPIO--> A
+F(Physical Button 2 (Volume Down)) --GPIO--> A
+G(Physical Button 3 (Volume Mute)) --GPIO--> A
+H(Physical Button 4 (Activty 1 Preset)) --GPIO--> A
+I(Physical Button 5 (Activty 2 Preset)) --GPIO--> A
 
 
 ```
@@ -294,20 +328,21 @@ This is the flow of  software and how each component will work together.
 
 ```mermaid
 graph
-A[GUI] ----> B(15x8 GUI of Buttons)
+A[GUI] ----> B(9x15 GUI of Buttons)
 A[GUI] ----> C(Canvas)
-B ----> D(BPM Slider)
+B ----> D(Preset)
 C ----> D
-D ----> E(Selecting Music Mode)
-E ----> F(Selecting Note Origin)
-F ----> G(Play Button)
-F ----> H(Clear Button)
+D ----> E(BPM Slider)
+E ----> F(Selecting Music Mode)
+F ----> G(Selecting Note Origin)
+G ----> H(Play Button)
+G ----> I(Clear Button)
 ```
 
-## Adding new features to the GUI
- By adding new features into our peoject, it makes the GUI more engaging and makes it more enjoyable for the user.
+## Implementing defining features
+ By adding these features into our system, it makes the GUI more engaging and makes it more enjoyable for the user.
 
-### Preset Button
+### Preset Buttons
 With the addition of the preset button, it allows the user to see an exmaple of how to GUI should be used.
 ```
 def preset():
@@ -392,10 +427,67 @@ canvas.bind("<B1-Motion>", addLine)
 ### Touch Display
 A touch display enhances playability for the GUI with ease with the touch by their hand, especially for Canvas Mode.
 
+#### Hardware Installation
+Hardware installation for the Touchscreen Display (in this system's case, we have used RaspberryPi 3 7inch Touchscreen Display), installation steps is referred from link below:
+
+https://www.instructables.com/Raspberry-Pi-Touchscreen-Setup/
+
+#### Software Installation
+As for software installation, step-by-step guide is referenced from the link below:
+https://gist.github.com/josef81/ebb71c1e508e0a818de7e0bb5b96749b
+
+Open terminal and update the repositories:
+1. `sudo apt-get update`
+
+An upgrade to the whole system isn't needed but it is recommended:
+2. `sudo apt-get upgrade`
+
+Now for the configuration:
+
+3. Open terminal and use the command: sudo nano /boot/config.txt
+
+4. Copy and paste this into the /boot/config.txt
+```
+hdmi_group=2
+hdmi_mode=1
+hdmi_mode=87
+hdmi_cvt 800 480 60 6 0 0 0
+dtparam=spi=on
+dtparam=i2c_arm=on
+
+dtoverlay=ads7846,cs=1,penirq=25,penirq_pull=2,speed=50000,keep_vref_on=0,swapxy=0,pmax=255,xohms=150,xmin=200,xmax=3900,ymin=200,ymax=3900
+
+dtoverlay=w1-gpio-pullup,gpiopin=4,extpullup=1
+```
+
+5. Ctrl + x and confirm file name(dont change name) press enter, type y and press enter to save changes.
+
+6. Reboot
+
+7. Install touchscreen software w/ command: sudo apt-get install xinput-calibrator
+
+8. Calibrate the touchscreen by selecting Menu-->Preferences-->Calibrate Touchscreen (You will need to *use the stylus provided* with the screen and as accurately as you can select the circle inside of the X for the 4 X's that pop up during the calibration). After you do that for the 4 X's dont do anything else until it finishes loading
+
+9. After calibration finishes loading an LXTerminal window pops up! Make sure to read that window it will tell you what to copy to your calibration file so that it saves! (Otherwise you will be resetting calibration on every reboot).
+
+However it does NOT say where to put the calibration changes for the distro i am running
+
+The location to save the output for your calibration is: /usr/share/X11/xorg.conf.d/10-evdev.conf
+
+10. Type the command: sudo nano /usr/share/X11/xorg.conf.d/10-evdev.conf
+and paste the calibration output into this file.
+
+11. Ctrl + x and confirm file name(dont change name)press enter, type y and press enter to save changes.
+
+Note: If want to restart the calibration of the touchscreen, type this command:
+`apt-get remove --purge xinput-calibrator`,
+then reboot and reinstall it.
+
+
 ### Activites
 We have made different activities to engage the user to play around and guess the different sounds played.
 
-#### Mario!
+#### Activity 1: Mario!
 Benefits for first time users, to learn the use of the pixel grid and play their drawing with a familiar tune.
 ```
 def activity_1():
@@ -405,7 +497,7 @@ def activity_1():
         button[mario_row[i]][mario_column[i]].config(bg="#AFE1AF")
 ```
 
-#### Trace the Drawing
+#### Activity 2: Trace the Drawing
 Play and learn the enhance capabilities of drawing on a canvas, with the use of the touch display adding more playability.
 ```
 def activity_2():
@@ -414,8 +506,5 @@ def activity_2():
 tree = PhotoImage(file='/home/pi/Project/cartoon_tree.png')
 tree = tree.subsample(1, 2)
 
-#### Variety of Beats
-The added parameters (BPM, Soundtype and Note Origin) adds more variety of sounds and effects for the users
-```
 
 As of 4th August 2022, 12:00am
