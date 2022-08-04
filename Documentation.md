@@ -505,6 +505,6 @@ def activity_2():
 
 tree = PhotoImage(file='/home/pi/Project/cartoon_tree.png')
 tree = tree.subsample(1, 2)
-
+```
 
 As of 4th August 2022, 12:00am
